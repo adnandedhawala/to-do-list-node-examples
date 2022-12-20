@@ -6,7 +6,7 @@ const  router = express.Router();
 
 router.route("/").post(async(req:Request,res:Response)=>{
     const {data} = req.body;
-    if(!data) res.status(400).send("improper request")
+    if(!data) res.status(400).send('improper request')
     createTodoSchema.validate(data).then(async (result)=>{
         try{
             const todoItem = new Todo(result);
