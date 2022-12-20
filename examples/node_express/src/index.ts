@@ -1,5 +1,6 @@
-import express, { Application, Request, Response } from "express";
-
+import express, { Application, ErrorRequestHandler, NextFunction, Request, Response } from "express";
+import { connect } from "mongoose";
+import todoController from "./routes/todoController"
 const app: Application = express();
 const port = 3000;
 
@@ -7,14 +8,11 @@ const port = 3000;
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
-app.get(
-    "/",
-    async (req: Request, res: Response): Promise<Response> => {
-        return res.status(200).send({
-            message: "Hello World!",
-        });
-    }
-);
+app.use("/todo",todoController);
+
+connect("mongodb://localhost:27017/todoDb",{},()=>{
+    console.log("connected to mongo")
+})
 
 try {
     app.listen(port, (): void => {
